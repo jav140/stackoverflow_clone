@@ -20,12 +20,12 @@ public class QuestionCreateDto implements Dto {
     @NotBlank(message = "title cannot be empty")
     private String title;
 
-    @NotBlank(message = "title cannot be empty")
+    @NotBlank(message = "type cannot be empty")
     private String type;
 
-    @NotBlank(message = "title cannot be empty")
+    @NotBlank(message = "body cannot be empty")
     private String body;
 
-    private List<Answer> answerList;
+
 
 }
