@@ -1,6 +1,9 @@
 package com.example.stackoverflow_mono.domains;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,6 +12,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -34,9 +38,16 @@ public class Question {
     private String body;
 
     @OneToMany(mappedBy = "question")
+    @JsonManagedReference
     private List<Answer> answerList;
 
     @Embedded
     private Auditable auditable;
+
+    @ManyToOne
+    @JsonBackReference
+    private User user;
+
+
 
 }

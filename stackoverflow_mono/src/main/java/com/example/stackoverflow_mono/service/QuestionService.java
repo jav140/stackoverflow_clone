@@ -1,11 +1,13 @@
 package com.example.stackoverflow_mono.service;
 
 
+import com.example.stackoverflow_mono.domains.Answer;
 import com.example.stackoverflow_mono.domains.Question;
 import com.example.stackoverflow_mono.dto.question.QuestionCreateDto;
 import com.example.stackoverflow_mono.dto.question.QuestionDto;
 import com.example.stackoverflow_mono.dto.question.QuestionUpdateDto;
 import com.example.stackoverflow_mono.mapper.QuestionMapper;
+import com.example.stackoverflow_mono.repository.AnswerRepo;
 import com.example.stackoverflow_mono.repository.QuestionRepo;
 import com.example.stackoverflow_mono.utils.BaseUtils;
 import lombok.NonNull;
@@ -18,8 +20,10 @@ public class QuestionService extends AbstractService<QuestionRepo, QuestionMappe
 implements GenericCrudService<Long, QuestionDto, QuestionCreateDto, QuestionUpdateDto>{
 
 
-    public QuestionService(QuestionRepo repository, QuestionMapper mapper, BaseUtils utils) {
+    private final AnswerRepo answerRepo;
+    public QuestionService(QuestionRepo repository, QuestionMapper mapper, BaseUtils utils, AnswerRepo answerRepo) {
         super(repository, mapper, utils);
+        this.answerRepo = answerRepo;
     }
 
     @Override
@@ -49,6 +53,10 @@ implements GenericCrudService<Long, QuestionDto, QuestionCreateDto, QuestionUpda
     @Override
     public QuestionDto get(@NonNull Long id) {
         Question question = repository.findById(id).orElseThrow(() -> new RuntimeException("Question not found"));
-        return mapper.toDto(question);
+        List<Answer> answerList = answerRepo.findAllByQuestionId(id);
+        question.setAnswerList(answerList);
+        QuestionDto questionDto = mapper.toDto(question);
+        questionDto.setAnswers(answerList);
+        return questionDto;
     }
 }
