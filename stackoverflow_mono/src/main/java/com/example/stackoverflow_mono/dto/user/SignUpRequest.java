@@ -10,6 +10,9 @@ import java.util.Set;
 public class SignUpRequest implements Dto {
     @NotBlank
     private String fullName;
+
+    @NotBlank
+    private String displayName;
     @NotBlank
     @Size(min = 3, max = 20)
     private String username;
@@ -22,10 +25,12 @@ public class SignUpRequest implements Dto {
 
     //    private List<SocialNetwork> socialNetworks;
     @NotBlank
-    @Size(min = 6, max = 40)
+    @Size(min = 6, max = 40,message = "number of characters in password must be between 6 and 40")
     private String password;
 
     private String image_url;
+
+
 
     public String getFullName() {
         return fullName;
@@ -34,6 +39,15 @@ public class SignUpRequest implements Dto {
     public void setFullName(String fullName) {
         this.fullName = fullName;
     }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
 
     public String getUsername() {
         return username;

@@ -95,6 +95,7 @@ public class UserDetailsServiceImpl extends AbstractService<UserRepository, Auth
                 .fullName(signupRequest.getFullName())
                 .image_url(signupRequest.getImage_url())
                 .password(encoder.encode(signupRequest.getPassword()))
+                .displayName(signupRequest.getDisplayName())
                 .username(signupRequest.getUsername())
                 .build();
 
